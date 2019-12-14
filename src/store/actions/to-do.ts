@@ -1,12 +1,17 @@
-import { TODO_ADD, TODO_COMPLETE, TODO_REMOVE, TODO_REQUEST, TODO_SET_CURRENT_VALUE, TodoActionTypes } from '../../types/actions';
+import { TODO_ADD, TODO_COMPLETE, TODO_REMOVE, TODO_REQUEST, TODO_SET_PERSONE_VALUE, TODO_SET_TASK_VALUE, TodoActionTypes } from '../../types/actions';
 
 import { AppState } from '../reducers/root';
 import { Dispatch } from "redux";
-import { ThunkAction } from 'redux-thunk'
+import { ThunkAction } from 'redux-thunk';
 import { Todo } from '../../types/to-do';
 
-export const changeTodoValue = (value: string): TodoActionTypes => ({
-    type: TODO_SET_CURRENT_VALUE,
+export const changeTaskValue = (value: string): TodoActionTypes => ({
+    type: TODO_SET_TASK_VALUE,
+    value
+});
+
+export const changePersoneValue = (value: string): TodoActionTypes => ({
+    type: TODO_SET_PERSONE_VALUE,
     value
 });
 
