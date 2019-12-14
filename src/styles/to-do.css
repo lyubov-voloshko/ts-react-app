@@ -1,0 +1,9 @@
+.toDo {
+    margin: 40px auto;
+    max-width: 600px;
+    width: 90%
+}
+
+.addForm {
+    display: flex;
+}
