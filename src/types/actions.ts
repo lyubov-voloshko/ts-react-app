@@ -1,13 +1,19 @@
 import { Todo } from './to-do';
 
-export const TODO_SET_CURRENT_VALUE = "TODO_SET_CURRENT_VALUE"
+export const TODO_SET_TASK_VALUE = "TODO_SET_TASK_VALUE"
+export const TODO_SET_PERSONE_VALUE = "TODO_SET_PERSONE_VALUE"
 export const TODO_ADD = "TODO_ADD"
 export const TODO_REMOVE = "TODO_REMOVE"
 export const TODO_COMPLETE = "TODO_COMPLETE"
 export const TODO_REQUEST = "TODO_REQUEST"
 
-export interface SetCurrentValueAction {
-    type: "TODO_SET_CURRENT_VALUE";
+export interface SetTaskValueAction {
+    type: "TODO_SET_TASK_VALUE";
+    value: string
+}
+
+export interface SetPersoneValueAction {
+    type: "TODO_SET_PERSONE_VALUE";
     value: string
 }
 
@@ -31,4 +37,4 @@ export interface RequestTodoAction {
     todo: Todo
 }
 
-export type TodoActionTypes = SetCurrentValueAction | AddTodoAction | RemoveTodoAction | CompleteTodoAction | RequestTodoAction;
+export type TodoActionTypes = SetTaskValueAction | SetPersoneValueAction | AddTodoAction | RemoveTodoAction | CompleteTodoAction | RequestTodoAction;

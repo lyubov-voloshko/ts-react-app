@@ -1,7 +1,7 @@
 import './styles/to-do.css';
 
 import { Dispatch, bindActionCreators } from "redux";
-import { addTodo, changeTodoValue, completeTodo, removeTodo, requestAddTodo } from './store/actions/to-do'
+import { addTodo, changePersoneValue, changeTaskValue, completeTodo, removeTodo, requestAddTodo } from './store/actions/to-do'
 
 import { AppState } from './store/reducers/root';
 import React from 'react';
@@ -21,12 +21,14 @@ interface TodoListState {
 }
 
 const mapStateToProps = ( state: AppState, ownProps: TodoListProps) => ({
-  currentValue: state.todoState.currentValue,
+  taskValue: state.todoState.taskValue,
+  personeValue: state.todoState.personeValue,
   todos: state.todoState.todos
 });
 
 const mapDispatchToProps = {
-    changeTodoValue,
+    changePersoneValue,
+    changeTaskValue,
     addTodo,
     removeTodo,
     completeTodo,
@@ -38,23 +40,25 @@ type Props = TodoListProps & typeof mapDispatchToProps & ReturnType<typeof mapSt
 
 export class TodoComponent extends React.Component<Props, TodoListState> {
   render () {
-    const { currentValue, todos, changeTodoValue, requestAddTodo, completeTodo, removeTodo } = this.props;
+    const { taskValue, personeValue, todos, changePersoneValue, changeTaskValue, requestAddTodo, completeTodo, removeTodo } = this.props;
     return (
       <div className="toDo">
         <div className="addForm">
-
-          <TextField value={currentValue} onChange={(e: any) => changeTodoValue(e.target.value)} />
-          <TextField value={currentValue} onChange={(e: any) => changeTodoValue(e.target.value)} />
-          <button onClick={() => requestAddTodo({ text: currentValue, completed: false })}>
+          <TextField id="todo" label="Your task:" value={taskValue} onChange={(e: any) => changeTaskValue(e.target.value)} />
+          <TextField id="involved-persone" label="Involved persone:" value={personeValue} onChange={(e: any) => changePersoneValue(e.target.value)} />
+          <button onClick={() => requestAddTodo({ task: taskValue, completed: false, involvedPersone: personeValue ? {name: { full: personeValue }} : undefined })}>
             +
           </button>
         </div>
         <div>
-          The List
+          <h4>The List</h4>
           <ul>
             {todos ? todos.map ((todo, index) => {
               return<li key={index}>
-                <span>{todo.text}</span>
+                <span>You are going to</span>
+                <span>&nbsp;{todo.task}</span>
+                {todo.involvedPersone ? <span>&nbsp;with {todo.involvedPersone.name.first}</span> : null}
+                {todo.involvedPersone ? <p>Remind Mr(s).{todo.involvedPersone.name.last || todo.involvedPersone.name.first}</p> : null}
                 {todo.completed ? 
                   <span>&nbsp;done</span> : 
                   <button onClick={() => completeTodo(index) }>
