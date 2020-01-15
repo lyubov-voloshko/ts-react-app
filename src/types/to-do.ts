@@ -18,3 +18,7 @@ export interface State {
     personeValue: string;
     todos: Todo[];
 };
+
+export type Dictionary<T> = {
+    [k: string]: T | undefined;
+}

@@ -1,3 +1,4 @@
+import { Dictionary } from '../../types/to-do';
 import { Persone } from '../../types/to-do';
 import { State } from '../../types/to-do';
 import { TodoActionTypes } from '../../types/actions';
@@ -22,6 +23,22 @@ const getPersone = (personeName: {full: string}): Persone => {
     }
 }
 
+const mapDict = <T, S>(
+    dict: Dictionary<T>,
+    fn: (arg: T, index: number) => S
+    ): Dictionary<S> => {
+    const result: Dictionary<S> = {};
+
+    Object.keys(dict).forEach((value, index) => {
+        const currentItem = dict[value];
+        if (currentItem) {
+            result[value] = fn(currentItem, index);
+        }
+    });
+
+    return result;
+}
+
 const todoReducer = (state = initialState, action: TodoActionTypes): State => {
     switch(action.type) {
         case "TODO_SET_TASK_VALUE": {
@@ -35,9 +52,6 @@ const todoReducer = (state = initialState, action: TodoActionTypes): State => {
         case "TODO_ADD": {
             let currentTodos = state.todos;
             let involvedPersone;
-            if (currentTodos.length === 0) {
-                currentTodos = []
-            }
             if (action.todo.involvedPersone) {
                 involvedPersone = getPersone(action.todo.involvedPersone.name);
             } else {
@@ -48,6 +62,13 @@ const todoReducer = (state = initialState, action: TodoActionTypes): State => {
                 completed: action.todo.completed, 
                 involvedPersone });
             const updatedTodos = [... currentTodos];
+
+
+            console.log(mapDict({
+                a: 'a',
+                b: 'b'
+            }, (str) => ({ val: str })));
+
             return {...state, todos: updatedTodos };
         }
         case "TODO_REMOVE": {
