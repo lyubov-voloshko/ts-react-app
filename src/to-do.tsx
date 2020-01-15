@@ -45,6 +45,7 @@ export class TodoComponent extends React.Component<Props, TodoListState> {
       <div className="toDo">
         <div className="addForm">
           <h1>Add todo</h1>
+          <p>Enter the todo and its details.</p>
           <TextField id="todo" label="Your task:" value={taskValue} onChange={(e: any) => changeTaskValue(e.target.value)} />
           <TextField id="involved-persone" label="Involved persone:" value={personeValue} onChange={(e: any) => changePersoneValue(e.target.value)} />
           <button onClick={() => requestAddTodo({ task: taskValue, completed: false, involvedPersone: personeValue ? {name: { full: personeValue }} : undefined })}>
